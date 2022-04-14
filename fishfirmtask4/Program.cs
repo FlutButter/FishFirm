@@ -257,18 +257,32 @@ namespace fishfirmtask4
                 return true;
             return false;
         }
-        public static void Task3() //не смог добить как сделать, чтобы сорт рыбы выводился только один раз, а также как объединить повторяющийся рейс у одного сорта и сложить общий улов
+        public static void Task3() //Можно ли сделать проще?:D
         {
             Context db = new();
+            var sorts = db.Catches.ToList().DistinctBy(x => x.Kind);
             var catches = db.Catches
                 .Include(x => x.VisitFishPlace)
                     .ThenInclude(y => y.FishingOut)
                 .ToList();
-            foreach (var fish in catches)
+            foreach (var sort in sorts)
             {
-                Console.WriteLine($"Сорт: {fish.Kind}, рейс #{fish.VisitFishPlace.FishingOut.Id}, " +
-                    $"Даты: {fish.VisitFishPlace.FishingOut.DateRelease:dd.MM.yyyy} - {fish.VisitFishPlace.FishingOut.DateReturn:dd.MM.yyyy}, " +
-                    $"Улов: {fish.Weight} кг.");
+                Console.WriteLine($"Сорт: {sort.Kind}"); 
+                int count = 0;
+                var races = new List<String>();
+                foreach (var fish in catches)
+                {
+                    if (fish.Kind == sort.Kind)
+                    {
+                        races.Add($"Рейс #{fish.VisitFishPlace.FishingOut.Id}, " +
+                            $"Даты: { fish.VisitFishPlace.FishingOut.DateRelease:dd.MM.yyyy} - { fish.VisitFishPlace.FishingOut.DateReturn:dd.MM.yyyy}");
+                        count += fish.Weight;
+                    }
+                }
+                var sorted = races.Distinct();
+                foreach (var race in sorted)
+                    Console.WriteLine(race);
+                Console.WriteLine($"Общий улов: {count} кг.");
             }
         }
         public static void Task2()
