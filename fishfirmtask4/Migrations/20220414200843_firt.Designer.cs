@@ -12,8 +12,8 @@ using fishfirmtask4;
 namespace fishfirmtask4.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20220330145219_Initial")]
-    partial class Initial
+    [Migration("20220414200843_firt")]
+    partial class firt
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -74,21 +74,40 @@ namespace fishfirmtask4.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Kind")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<int>("FishId")
+                        .HasColumnType("int");
 
                     b.Property<int>("VisitFishPlaceId")
                         .HasColumnType("int");
 
                     b.Property<int>("Weight")
+                        .HasMaxLength(100)
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FishId");
+
                     b.HasIndex("VisitFishPlaceId");
 
                     b.ToTable("Catches");
+                });
+
+            modelBuilder.Entity("fishfirmtask4.Fish", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Kind")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Fish");
                 });
 
             modelBuilder.Entity("fishfirmtask4.Fisherman", b =>
@@ -199,9 +218,9 @@ namespace fishfirmtask4.Migrations
                     b.Property<int>("FishingOutId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Quality")
+                    b.Property<int>("Quality")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -229,11 +248,19 @@ namespace fishfirmtask4.Migrations
 
             modelBuilder.Entity("fishfirmtask4.Catch", b =>
                 {
+                    b.HasOne("fishfirmtask4.Fish", "Fish")
+                        .WithMany("Catches")
+                        .HasForeignKey("FishId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("fishfirmtask4.VisitFishPlace", "VisitFishPlace")
                         .WithMany("Catches")
                         .HasForeignKey("VisitFishPlaceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Fish");
 
                     b.Navigation("VisitFishPlace");
                 });
@@ -279,6 +306,11 @@ namespace fishfirmtask4.Migrations
             modelBuilder.Entity("fishfirmtask4.Boat", b =>
                 {
                     b.Navigation("FishingOuts");
+                });
+
+            modelBuilder.Entity("fishfirmtask4.Fish", b =>
+                {
+                    b.Navigation("Catches");
                 });
 
             modelBuilder.Entity("fishfirmtask4.FishingOut", b =>
