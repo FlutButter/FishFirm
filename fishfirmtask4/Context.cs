@@ -11,6 +11,7 @@ namespace fishfirmtask4
     {
         public DbSet<Boat> Boats { get; set; }
         public DbSet<Catch> Catches { get; set; }
+        public DbSet<Fish> Fish { get; set; }
         public DbSet<Fisherman> Fishermen { get; set; }
         public DbSet<FishingOut> FishingOuts { get; set; }
         public DbSet<VisitFishPlace> VisitFishPlaces { get; set; }

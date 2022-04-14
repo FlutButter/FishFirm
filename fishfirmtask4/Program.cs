@@ -5,17 +5,6 @@ using System.Linq;
 
 namespace fishfirmtask4
 {
-    class Const
-    {
-        public const string kind1 = "Горбуша";
-        public const string kind2 = "Тунец";
-        public const string kind3 = "Судак";
-        public const string kind4 = "Тудак";
-        public const string kind5 = "Карась";
-        public const string great = "Отличное";
-        public const string good = "Хорошее";
-        public const string bad = "Плохое";
-    }
     class Program
     {
         public static void DataGenerator()
@@ -140,7 +129,7 @@ namespace fishfirmtask4
             {
                 DateIn = new DateTime(2019, 02, 24),
                 DateOut = new DateTime(2019, 03, 01),
-                Quality = Const.great,
+                Quality = Quality.Great,
                 FishingOut = fo1,
                 FishPlace = fp1
             };
@@ -148,7 +137,7 @@ namespace fishfirmtask4
             {
                 DateIn = new DateTime(2019, 03, 02),
                 DateOut = new DateTime(2019, 03, 12),
-                Quality = Const.good,
+                Quality = Quality.Good,
                 FishingOut = fo1,
                 FishPlace = fp3
             };
@@ -156,7 +145,7 @@ namespace fishfirmtask4
             {
                 DateIn = new DateTime(2019, 03, 14),
                 DateOut = new DateTime(2019, 03, 25),
-                Quality = Const.bad,
+                Quality = Quality.Bad,
                 FishingOut = fo1,
                 FishPlace = fp5
             };
@@ -164,7 +153,7 @@ namespace fishfirmtask4
             {
                 DateIn = new DateTime(2019, 05, 05),
                 DateOut = new DateTime(2019, 05, 17),
-                Quality = Const.great,
+                Quality = Quality.Great,
                 FishingOut = fo2,
                 FishPlace = fp2
             };
@@ -172,7 +161,7 @@ namespace fishfirmtask4
             {
                 DateIn = new DateTime(2019, 05, 20),
                 DateOut = new DateTime(2019, 06, 12),
-                Quality = Const.great,
+                Quality = Quality.Great,
                 FishingOut = fo2,
                 FishPlace = fp3
             };
@@ -180,7 +169,7 @@ namespace fishfirmtask4
             {
                 DateIn = new DateTime(2019, 09, 10),
                 DateOut = new DateTime(2019, 09, 30),
-                Quality = Const.good,
+                Quality = Quality.Good,
                 FishingOut = fo3,
                 FishPlace = fp4
             };
@@ -188,7 +177,7 @@ namespace fishfirmtask4
             {
                 DateIn = new DateTime(2019, 10, 02),
                 DateOut = new DateTime(2019, 10, 12),
-                Quality = Const.bad,
+                Quality = Quality.Bad,
                 FishingOut = fo3,
                 FishPlace = fp6
             };
@@ -196,7 +185,7 @@ namespace fishfirmtask4
             {
                 DateIn = new DateTime(2020, 03, 05),
                 DateOut = new DateTime(2019, 04, 01),
-                Quality = Const.bad,
+                Quality = Quality.Bad,
                 FishingOut = fo4,
                 FishPlace = fp6
             };
@@ -204,7 +193,7 @@ namespace fishfirmtask4
             {
                 DateIn = new DateTime(2019, 04, 05),
                 DateOut = new DateTime(2019, 05, 11),
-                Quality = Const.good,
+                Quality = Quality.Good,
                 FishingOut = fo4,
                 FishPlace = fp1
             };
@@ -213,24 +202,30 @@ namespace fishfirmtask4
                 vfp1, vfp2, vfp3, vfp4, vfp5,
                 vfp6, vfp7, vfp8, vfp9
             });
-            Catch c1 = new() { Kind = Const.kind1, Weight = 120, VisitFishPlace = vfp1 };
-            Catch c2 = new() { Kind = Const.kind2, Weight = 100, VisitFishPlace = vfp1 };
-            Catch c3 = new() { Kind = Const.kind3, Weight = 243, VisitFishPlace = vfp1 };
-            Catch c4 = new() { Kind = Const.kind4, Weight = 231, VisitFishPlace = vfp2 };
-            Catch c5 = new() { Kind = Const.kind5, Weight = 654, VisitFishPlace = vfp3 };
-            Catch c6 = new() { Kind = Const.kind2, Weight = 560, VisitFishPlace = vfp3 };
-            Catch c7 = new() { Kind = Const.kind2, Weight = 965, VisitFishPlace = vfp4 };
-            Catch c8 = new() { Kind = Const.kind1, Weight = 594, VisitFishPlace = vfp4 };
-            Catch c9 = new() { Kind = Const.kind1, Weight = 213, VisitFishPlace = vfp5 };
-            Catch c10 = new() { Kind = Const.kind1, Weight = 342, VisitFishPlace = vfp5 };
-            Catch c11 = new() { Kind = Const.kind3, Weight = 975, VisitFishPlace = vfp6 };
-            Catch c12 = new() { Kind = Const.kind4, Weight = 505, VisitFishPlace = vfp6 };
-            Catch c13 = new() { Kind = Const.kind5, Weight = 546, VisitFishPlace = vfp7 };
-            Catch c14 = new() { Kind = Const.kind5, Weight = 555, VisitFishPlace = vfp7 };
-            Catch c15 = new() { Kind = Const.kind2, Weight = 213, VisitFishPlace = vfp8 };
-            Catch c16 = new() { Kind = Const.kind2, Weight = 903, VisitFishPlace = vfp8 };
-            Catch c17 = new() { Kind = Const.kind3, Weight = 875, VisitFishPlace = vfp8 };
-            Catch c18 = new() { Kind = Const.kind2, Weight = 761, VisitFishPlace = vfp9 };
+            Fish fi1 = new() { Kind = "Горбуша" };
+            Fish fi2 = new() { Kind = "Тунец" };
+            Fish fi3 = new() { Kind = "Судак" };
+            Fish fi4 = new() { Kind = "Тудак" };
+            Fish fi5 = new() { Kind = "Карась" };
+            db.Fish.AddRange(new List<Fish> { fi1, fi2, fi3, fi4, fi5 });
+            Catch c1 = new() { Fish = fi1, Weight = 120, VisitFishPlace = vfp1 };
+            Catch c2 = new() { Fish = fi2, Weight = 100, VisitFishPlace = vfp1 };
+            Catch c3 = new() { Fish = fi3, Weight = 243, VisitFishPlace = vfp1 };
+            Catch c4 = new() { Fish = fi4, Weight = 231, VisitFishPlace = vfp2 };
+            Catch c5 = new() { Fish = fi5, Weight = 654, VisitFishPlace = vfp3 };
+            Catch c6 = new() { Fish = fi2, Weight = 560, VisitFishPlace = vfp3 };
+            Catch c7 = new() { Fish = fi2, Weight = 965, VisitFishPlace = vfp4 };
+            Catch c8 = new() { Fish = fi1, Weight = 594, VisitFishPlace = vfp4 };
+            Catch c9 = new() { Fish = fi1, Weight = 213, VisitFishPlace = vfp5 };
+            Catch c10 = new() { Fish = fi1, Weight = 342, VisitFishPlace = vfp5 };
+            Catch c11 = new() { Fish = fi3, Weight = 975, VisitFishPlace = vfp6 };
+            Catch c12 = new() { Fish = fi4, Weight = 505, VisitFishPlace = vfp6 };
+            Catch c13 = new() { Fish = fi5, Weight = 546, VisitFishPlace = vfp7 };
+            Catch c14 = new() { Fish = fi5, Weight = 555, VisitFishPlace = vfp7 };
+            Catch c15 = new() { Fish = fi2, Weight = 213, VisitFishPlace = vfp8 };
+            Catch c16 = new() { Fish = fi2, Weight = 903, VisitFishPlace = vfp8 };
+            Catch c17 = new() { Fish = fi3, Weight = 875, VisitFishPlace = vfp8 };
+            Catch c18 = new() { Fish = fi2, Weight = 761, VisitFishPlace = vfp9 };
             db.Catches.AddRange(new List<Catch>
             {
                 c1, c2, c3, c4, c5,
@@ -257,27 +252,24 @@ namespace fishfirmtask4
                 return true;
             return false;
         }
-        public static void Task3() //Можно ли сделать проще?:D
+        public static void Task3()
         {
             Context db = new();
-            var sorts = db.Catches.ToList().DistinctBy(x => x.Kind);
-            var catches = db.Catches
-                .Include(x => x.VisitFishPlace)
-                    .ThenInclude(y => y.FishingOut)
+            var fishes = db.Fish
+                .Include(x => x.Catches)
+                    .ThenInclude(x => x.VisitFishPlace)
+                        .ThenInclude(x => x.FishingOut)
                 .ToList();
-            foreach (var sort in sorts)
+            foreach (var fish in fishes)
             {
-                Console.WriteLine($"Сорт: {sort.Kind}"); 
+                Console.WriteLine($"Сорт: {fish.Kind}"); 
                 int count = 0;
                 var races = new List<String>();
-                foreach (var fish in catches)
+                foreach (var cat in fish.Catches)
                 {
-                    if (fish.Kind == sort.Kind)
-                    {
-                        races.Add($"Рейс #{fish.VisitFishPlace.FishingOut.Id}, " +
-                            $"Даты: { fish.VisitFishPlace.FishingOut.DateRelease:dd.MM.yyyy} - { fish.VisitFishPlace.FishingOut.DateReturn:dd.MM.yyyy}");
-                        count += fish.Weight;
-                    }
+                    count += cat.Weight;
+                    races.Add($"Рейс #{cat.VisitFishPlace.FishingOut.Id}, " +
+                       $"Даты: { cat.VisitFishPlace.FishingOut.DateRelease:dd.MM.yyyy} - { cat.VisitFishPlace.FishingOut.DateReturn:dd.MM.yyyy}");
                 }
                 var sorted = races.Distinct();
                 foreach (var race in sorted)

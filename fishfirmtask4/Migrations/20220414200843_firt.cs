@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace fishfirmtask4.Migrations
 {
-    public partial class Initial : Migration
+    public partial class firt : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,6 +23,19 @@ namespace fishfirmtask4.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Boats", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Fish",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Kind = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Fish", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -126,7 +139,7 @@ namespace fishfirmtask4.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DateIn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateOut = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Quality = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Quality = table.Column<int>(type: "int", maxLength: 100, nullable: false),
                     FishingOutId = table.Column<int>(type: "int", nullable: false),
                     FishPlaceId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -153,13 +166,19 @@ namespace fishfirmtask4.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Kind = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Weight = table.Column<int>(type: "int", nullable: false),
-                    VisitFishPlaceId = table.Column<int>(type: "int", nullable: false)
+                    Weight = table.Column<int>(type: "int", maxLength: 100, nullable: false),
+                    VisitFishPlaceId = table.Column<int>(type: "int", nullable: false),
+                    FishId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Catches", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Catches_Fish_FishId",
+                        column: x => x.FishId,
+                        principalTable: "Fish",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Catches_VisitFishPlaces_VisitFishPlaceId",
                         column: x => x.VisitFishPlaceId,
@@ -167,6 +186,11 @@ namespace fishfirmtask4.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Catches_FishId",
+                table: "Catches",
+                column: "FishId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Catches_VisitFishPlaceId",
@@ -206,6 +230,9 @@ namespace fishfirmtask4.Migrations
 
             migrationBuilder.DropTable(
                 name: "FishermanTeam");
+
+            migrationBuilder.DropTable(
+                name: "Fish");
 
             migrationBuilder.DropTable(
                 name: "VisitFishPlaces");

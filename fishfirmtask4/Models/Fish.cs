@@ -7,14 +7,11 @@ using System.Threading.Tasks;
 
 namespace fishfirmtask4
 {
-    public class Catch
+    public class Fish
     {
         public int Id { get; set; }
         [MaxLength(100)]
-        public int Weight { get; set; }
-        public int VisitFishPlaceId { get; set; }
-        public int FishId { get; set; }
-        public Fish? Fish { get; set; }
-        public VisitFishPlace? VisitFishPlace { get; set; }
+        public string? Kind { get; set; }
+        public ICollection<Catch> Catches { get; set; } = new List<Catch>();
     }
 }
